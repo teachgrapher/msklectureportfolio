@@ -1,0 +1,581 @@
+<!-- 강의 주제를 골라 장바구니에 담고 요청서를 만드는 강사 포트폴리오 페이지 -->
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>김민성 선생님 연수 강의 고르기 | 여량고등학교 교무부장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#3182F6; --blue-press:#1B64DA; --blue-soft:#E8F3FF;
+  --bg:#F2F4F6; --card:#FFFFFF; --fill:#F2F4F6;
+  --ink:#191F28; --sub:#4E5968; --muted:#8B95A1; --line:#E5E8EB;
+  --topic-b:#7B61FF;
+  --topic-d:#6B7684; --topic-e:#16A34A; --topic-g:#0EA5E9; --topic-h:#14B8A6; --topic-i:#F04452; --topic-j:#D97706;
+  --lv-low:#15803D; --lv-mid:#B45309; --lv-high:#BE123C;
+  --shadow:0 8px 24px rgba(2,32,71,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --blue:#4C95FF; --blue-press:#2F7BF0; --blue-soft:#1B2A40;
+    --bg:#101013; --card:#1C1C22; --fill:#2A2A32;
+    --ink:#F2F4F6; --sub:#C3CAD2; --muted:#8B95A1; --line:#2C2C35;
+    --topic-b:#9B87FF;
+    --topic-d:#A7B0BA; --topic-e:#4ADE80; --topic-g:#38BDF8; --topic-h:#2DD4BF; --topic-i:#FF6B78; --topic-j:#FBBF24;
+    --lv-low:#4ADE80; --lv-mid:#FBBF24; --lv-high:#FB7185;
+    --shadow:0 8px 24px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --blue:#4C95FF; --blue-press:#2F7BF0; --blue-soft:#1B2A40;
+  --bg:#101013; --card:#1C1C22; --fill:#2A2A32;
+  --ink:#F2F4F6; --sub:#C3CAD2; --muted:#8B95A1; --line:#2C2C35;
+  --topic-b:#9B87FF;
+    --topic-d:#A7B0BA; --topic-e:#4ADE80; --topic-g:#38BDF8; --topic-h:#2DD4BF; --topic-i:#FF6B78; --topic-j:#FBBF24;
+  --lv-low:#4ADE80; --lv-mid:#FBBF24; --lv-high:#FB7185;
+  --shadow:0 8px 24px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  font-size:16px; line-height:1.6; letter-spacing:-0.01em;
+  word-break:keep-all; overflow-wrap:normal; hyphens:none;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:190px;
+}
+h1,h2,h3,h4{margin:0; letter-spacing:-0.02em}
+a{color:var(--blue)}
+button,input,select,textarea{font:inherit; color:inherit; letter-spacing:inherit}
+:focus-visible{outline:3px solid var(--blue); outline-offset:2px; border-radius:8px}
+.wrap{max-width:720px; margin:0 auto; padding:0 20px}
+
+/* 상단 */
+.top{position:sticky; top:0; z-index:10; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(12px)}
+.top .wrap{display:flex; justify-content:space-between; align-items:center; height:56px}
+.brand{font-weight:700; font-size:1.02rem}
+.top-right{display:flex; align-items:center; gap:8px}
+.top nav{display:flex; gap:4px}
+.theme-btn{border:none; background:var(--fill); width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:1rem; line-height:1; flex:none}
+.theme-btn:hover{background:var(--line)}
+.top nav a{text-decoration:none; color:var(--sub); font-size:.93rem; padding:6px 10px; border-radius:8px}
+.top nav a:hover{background:var(--fill)}
+
+/* 소개 */
+.hero{padding:40px 0 12px}
+.hero h1{font-size:clamp(1.75rem,5vw,2.4rem); font-weight:700; line-height:1.35; margin-bottom:12px}
+.hero p.lead{font-size:1.06rem; color:var(--sub); margin:0 0 28px}
+.how{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:0; margin:0 0 24px; list-style:none}
+.how li{background:var(--card); border-radius:16px; padding:16px 14px; font-size:.92rem; font-weight:600; color:var(--sub)}
+.how li b{display:block; font-size:1.4rem; margin-bottom:6px}
+.card{background:var(--card); border-radius:24px; padding:24px}
+.profile{display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:center}
+.avatar{width:56px; height:56px; border-radius:50%; background:var(--blue-soft); display:grid; place-items:center; font-size:1.6rem}
+.profile h2{font-size:1.2rem; font-weight:700}
+.profile .role{color:var(--sub); margin:2px 0 0; font-size:.95rem}
+.profile dl{grid-column:1/-1; margin:8px 0 0; display:grid; gap:0}
+.profile dl div{display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-top:1px solid var(--line); font-size:.95rem}
+.profile dt{color:var(--muted); flex:none}
+.profile dd{margin:0; text-align:right; font-weight:500}
+.p-tel{font-weight:700; text-decoration:none; color:var(--blue)}
+.p-tel:hover{text-decoration:underline}
+.contact-title{font-weight:700; color:var(--ink)!important; margin-bottom:4px!important}
+.tel a{color:inherit; text-decoration:none; display:inline-block; padding:4px 0}
+.tel a:hover{text-decoration:underline}
+footer .card p.tel{font-size:1.6rem; font-weight:700; color:var(--blue)!important; letter-spacing:0; margin-bottom:8px!important}
+
+/* 강의 목록 */
+.catalog{padding:36px 0 8px}
+.sec-title{font-size:1.45rem; font-weight:700; margin-bottom:14px}
+.filters{display:inline-flex; background:var(--line); border-radius:12px; padding:4px; margin-bottom:16px}
+.chip{border:none; background:transparent; border-radius:9px; padding:8px 16px; cursor:pointer; font-size:.93rem; font-weight:600; color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--card); color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,.08)}
+
+
+.topic{background:var(--card); border-radius:24px; padding:24px 20px 8px; margin-bottom:16px}
+.topic-title{display:flex; align-items:center; gap:12px; margin-bottom:6px}
+.topic-title .ico{width:44px; height:44px; border-radius:14px; display:grid; place-items:center; font-size:1.4rem; flex:none}
+.topic-title h3{font-size:1.12rem; font-weight:700; line-height:1.4}
+.lvl{display:inline-block; font-size:.75rem; font-weight:700; padding:2px 8px; border-radius:6px; vertical-align:2px; white-space:nowrap}
+.lvl[data-l="하"]{background:color-mix(in srgb, var(--lv-low) 14%, transparent); color:var(--lv-low)}
+.lvl[data-l="중"]{background:color-mix(in srgb, var(--lv-mid) 16%, transparent); color:var(--lv-mid)}
+.lvl[data-l="상"]{background:color-mix(in srgb, var(--lv-high) 14%, transparent); color:var(--lv-high)}
+.topic-sub{color:var(--sub); font-size:.93rem; margin:8px 0 8px}
+.item{display:grid; grid-template-columns:1fr auto; gap:14px; align-items:center; padding:16px 12px; margin:0 -12px; border-radius:16px; cursor:pointer; transition:background .15s}
+.item:hover{background:var(--fill)}
+.item:active{transform:scale(.99)}
+.item input{position:absolute; opacity:0; pointer-events:none}
+.item h4{font-size:1.02rem; font-weight:600; margin-bottom:4px}
+.item p{margin:0 0 8px; color:var(--sub); font-size:.9rem}
+.meta{display:flex; gap:6px; flex-wrap:wrap}
+.tag{font-size:.78rem; font-weight:600; border-radius:6px; padding:2px 8px; background:var(--fill); color:var(--sub)}
+.tag.time{background:var(--blue-soft); color:var(--blue)}
+.check{width:28px; height:28px; border-radius:50%; background:var(--line); display:grid; place-items:center; transition:background .15s}
+.check svg{width:16px; height:16px; stroke:var(--card); opacity:.9}
+.item.on .check{background:var(--blue)}
+.item.on .check svg{stroke:#fff; opacity:1}
+.item input:focus-visible + div + .check{outline:3px solid var(--blue); outline-offset:2px}
+
+footer{padding:12px 0 28px}
+footer .card p{margin:0 0 8px; color:var(--sub); font-size:.95rem}
+footer .card p:last-child{margin:0; color:var(--muted); font-size:.88rem}
+
+/* 버튼 */
+.btn{border:none; border-radius:16px; height:56px; padding:0 20px; cursor:pointer; font-weight:600; font-size:1.02rem; white-space:nowrap; transition:background .15s, transform .1s}
+.btn:active{transform:scale(.98)}
+.btn-main{background:var(--blue); color:#fff; width:100%}
+.btn-main:hover{background:var(--blue-press)}
+.btn-main:disabled{background:var(--fill); color:var(--muted); cursor:not-allowed; transform:none}
+.btn-sub{background:var(--fill); color:var(--sub)}
+.btn-soft{background:var(--blue-soft); color:var(--blue)}
+
+/* 하단 장바구니 */
+.cartbar{position:fixed; left:0; right:0; bottom:0; z-index:20; padding:0 0 max(12px, env(safe-area-inset-bottom));
+  background:linear-gradient(to top, var(--bg) 70%, transparent)}
+.cartbar .inner{background:var(--card); border-radius:24px; padding:16px; box-shadow:var(--shadow); margin-top:16px}
+.period-label{display:flex; justify-content:space-between; font-size:.9rem; color:var(--sub); margin-bottom:8px}
+.period-label b{color:var(--ink); font-weight:700}
+.track{height:8px; border-radius:99px; background:var(--fill); display:flex; overflow:hidden; position:relative; margin-bottom:14px}
+.track .seg{height:100%; transition:width .35s cubic-bezier(.2,.8,.2,1)}
+.track .tick{position:absolute; top:0; bottom:0; width:2px; background:var(--card)}
+
+/* 바텀시트 */
+.drawer-bg{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:30; opacity:0; pointer-events:none; transition:opacity .25s}
+.drawer-bg.open{opacity:1; pointer-events:auto}
+.drawer{position:fixed; left:50%; bottom:0; width:min(560px,100%); max-height:88vh; background:var(--card); z-index:31;
+  border-radius:24px 24px 0 0; transform:translate(-50%,100%); transition:transform .32s cubic-bezier(.2,.8,.2,1); display:flex; flex-direction:column}
+.drawer.open{transform:translate(-50%,0)}
+.grab{width:40px; height:4px; border-radius:99px; background:var(--line); margin:10px auto 0}
+.d-head{display:flex; justify-content:space-between; align-items:center; padding:12px 24px 8px}
+.d-head h2{font-size:1.3rem; font-weight:700}
+.d-body{flex:1; overflow-y:auto; padding:4px 24px 28px}
+.c-row{display:flex; gap:12px; align-items:center; padding:12px 0}
+.c-row .dot{width:10px; height:10px; border-radius:50%; flex:none}
+.c-row .t{flex:1; font-size:.97rem; font-weight:500}
+.c-row .m{color:var(--muted); font-size:.9rem; white-space:nowrap}
+.x{border:none; background:var(--fill); cursor:pointer; color:var(--muted); width:28px; height:28px; border-radius:50%; font-size:.85rem; flex:none}
+.summary{margin:12px 0 28px; padding:18px; background:var(--fill); border-radius:16px; font-size:.93rem; color:var(--sub)}
+.summary .big{display:block; font-size:1.5rem; font-weight:700; color:var(--ink); margin-bottom:4px}
+.sheet-sub{font-size:1.1rem; font-weight:700; margin:0 0 14px}
+.form{display:grid; gap:14px}
+.form label{display:grid; gap:6px; font-size:.88rem; font-weight:600; color:var(--sub)}
+.form input,.form select,.form textarea{border:2px solid transparent; border-radius:12px; padding:12px 14px; background:var(--fill); color:var(--ink); font-size:1rem}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none; border-color:var(--blue); background:var(--card)}
+.out{width:100%; min-height:220px; margin-top:16px; border:none; border-radius:16px; padding:16px; background:var(--fill); color:var(--ink); font-size:.9rem; line-height:1.65}
+.row-btns{display:grid; grid-template-columns:1fr 2fr; gap:8px; margin-top:20px}
+.row-btns.one{grid-template-columns:1fr}
+.note{font-size:.85rem; color:var(--muted); margin:10px 0 0; text-align:center}
+.empty{color:var(--muted); padding:40px 0; text-align:center}
+.empty b{display:block; font-size:2rem; margin-bottom:8px}
+
+.toast{position:fixed; left:50%; bottom:150px; transform:translate(-50%,10px); background:rgba(25,31,40,.92); color:#fff;
+  padding:12px 20px; border-radius:99px; font-size:.93rem; white-space:nowrap; font-weight:500; opacity:0; transition:opacity .2s, transform .2s; pointer-events:none; z-index:40}
+.toast.show{opacity:1; transform:translate(-50%,0)}
+
+@media (max-width:560px){
+  .top nav{display:none}
+  .how{grid-template-columns:1fr}
+  .how li{display:flex; align-items:center; gap:12px}
+  .how li b{margin:0; font-size:1.3rem}
+}
+.side-list{display:none}
+@media (min-width:1024px){
+  body{padding-bottom:0}
+  .wrap{max-width:1120px; padding:0 32px}
+  .top .wrap{height:64px}
+  .hero{display:grid; grid-template-columns:1.15fr 1fr; gap:48px; align-items:center; padding:72px 0 40px}
+  .hero h1{font-size:2.8rem}
+  .hero p.lead{font-size:1.15rem; max-width:32em}
+  .how{margin-bottom:0}
+  .how li{padding:20px 16px}
+  .catalog{padding-top:48px}
+  .sec-title{font-size:1.75rem}
+  .cat-layout{display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:24px; align-items:start}
+  .topic{padding:28px 28px 12px}
+  .item{padding:18px 16px; margin:0 -16px}
+  .item p{max-width:46em}
+  .cartbar{position:sticky; top:84px; left:auto; right:auto; bottom:auto; padding:0; background:none; z-index:5}
+  .cartbar .wrap{padding:0; max-width:none}
+  .cartbar .inner{margin-top:0; padding:24px}
+  .cartbar .inner::before{content:"장바구니"; display:block; font-size:1.15rem; font-weight:700; margin-bottom:14px}
+  .side-list{display:block; list-style:none; margin:0 0 16px; padding:0; max-height:40vh; overflow-y:auto}
+  .side-list li{display:flex; gap:10px; align-items:center; padding:8px 0; font-size:.9rem; border-top:1px solid var(--line)}
+  .side-list li:first-child{border-top:none}
+  .side-list .dot{width:8px; height:8px; border-radius:50%; flex:none}
+  .side-list .t{flex:1}
+  .side-list .m{color:var(--muted); white-space:nowrap}
+  .side-list .none{color:var(--muted); display:block; padding:12px 0; border:none}
+  footer{padding-bottom:56px}
+  footer .card{display:grid; grid-template-columns:auto 1fr; column-gap:32px; align-items:center; padding:28px 32px}
+  footer .contact-title{grid-column:1/-1}
+  footer .tel{margin:0!important}
+  .drawer{top:50%; bottom:auto; width:560px; max-height:86vh; border-radius:24px;
+    transform:translate(-50%,-46%); opacity:0; pointer-events:none; transition:transform .25s ease, opacity .2s}
+  .drawer.open{transform:translate(-50%,-50%); opacity:1; pointer-events:auto}
+  .grab{display:none}
+  .d-head{padding-top:24px}
+  .toast{bottom:40px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important; scroll-behavior:auto!important}
+}
+</style>
+<script>
+// 저장해 둔 화면 모드를 그리기 전에 적용 (기본값은 라이트 모드)
+try {
+  const saved = localStorage.getItem("theme");
+  document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+} catch (e) {}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">현장 맞춤형 찾아가는 디지털 교육혁신 연수</span>
+    <div class="top-right">
+      <nav>
+        <a href="#catalog">강의 고르기</a>
+        <a href="#contact">문의</a>
+      </nav>
+      <button class="theme-btn" id="themeBtn" aria-label="화면 모드 바꾸기"><span aria-hidden="true">🌙</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+<section class="hero">
+  <div class="hero-text">
+  <h1>우리 학교에 필요한 연수,<br>골라서 담아 보세요</h1>
+  <p class="lead">노션, 구글 시트, 제미나이 노트북 활용부터 Claude, Gemini, ChatGPT 같은 다양한 AI를 활용한 업무 자동화까지. 학교에 꼭 필요한 내용만 골라 현장 맞춤형 연수를 신청해 주세요.</p>
+  <ol class="how">
+    <li><b>☑️</b>듣고 싶은 강의 체크</li>
+    <li><b>⏱️</b>총 소요 시간 확인</li>
+    <li><b>✉️</b>요청서 만들어 보내기</li>
+  </ol>
+  </div>
+  <div class="card profile" aria-label="강사 소개">
+    <div class="avatar" aria-hidden="true">🧑‍🏫</div>
+    <div>
+      <h2>김민성 선생님</h2>
+      <p class="role">여량고등학교 영어 교사, 교무부장</p>
+    </div>
+    <dl>
+      <div><dt>소속</dt><dd>강원특별자치도 정선군 여량고등학교</dd></div>
+      <div><dt>담당</dt><dd>영어 수업, 교무 업무 총괄</dd></div>
+      <div><dt>관심</dt><dd>AI 활용 교무 업무 혁신, 교과 수업 및 평가 업무 개선, 학교 업무에서 노션 활용, 구글 시트를 활용한 학교업무정보센터 운영 등</dd></div>
+      <div><dt>연수 문의</dt><dd><a class="p-tel" href="tel:0507-0465-3015" aria-label="0507-0465-3015로 전화 걸기">📞 0507-0465-3015</a></dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="catalog" id="catalog">
+  <h2 class="sec-title">강의 고르기</h2>
+  <div class="filters" role="group" aria-label="분류 필터">
+    <button class="chip" data-level="all" aria-pressed="true">전체</button>
+    <button class="chip" data-level="교수학습" aria-pressed="false">교수학습</button>
+    <button class="chip" data-level="교무업무" aria-pressed="false">교무업무</button>
+  </div>
+
+  <div class="cat-layout">
+  <div id="topics"></div>
+  <!-- 장바구니 요약: 모바일은 하단 고정, 데스크톱은 오른쪽 고정 -->
+  <div class="cartbar" role="region" aria-label="장바구니 요약">
+    <div class="wrap">
+      <div class="inner">
+        <div class="period-label">
+          <span>담은 강의 <b id="cnt">0</b>개</span>
+          <span>총 <b id="total">0분</b></span>
+        </div>
+        <ul class="side-list" id="sideList"></ul>
+      <div class="track" id="track" aria-hidden="true"></div>
+        <button class="btn btn-main" id="openCart">장바구니 보기</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="card">
+    <p class="contact-title">연수 문의</p>
+    <p class="tel"><a href="tel:0507-0465-3015" aria-label="0507-0465-3015로 전화 걸기">📞 0507-0465-3015</a></p>
+    <p>나이스 현장지원단 문의 전화번호입니다. 요청서를 작성하셔서 이음톡으로 미리 보내주시고, 전화 상담이 필요하시면 이 번호로 전화주세요.</p>
+    <p>여량고등학교, 강원특별자치도 정선군</p>
+  </div>
+</footer>
+</main>
+
+<div class="drawer-bg" id="drawerBg"></div>
+<aside class="drawer" id="drawer" aria-label="장바구니" aria-hidden="true">
+  <div class="grab" aria-hidden="true"></div>
+  <div class="d-head">
+    <h2>장바구니</h2>
+    <button class="x" id="closeCart" aria-label="장바구니 닫기">✕</button>
+  </div>
+  <div class="d-body">
+    <div id="cartList"></div>
+    <div id="cartRest">
+      <div class="summary" id="summary"></div>
+      <h3 class="sheet-sub">강의 요청서 만들기</h3>
+      <div class="form">
+        <label>학교명<input id="fSchool" placeholder="예: ○○초등학교"></label>
+        <label>연수 대상
+          <select id="fTarget">
+            <option>고등학교 교원</option>
+            <option>중학교 교원</option>
+            <option>초등학교 교원</option>
+            <option>기타</option>
+          </select>
+        </label>
+        <label>참석 인원<input id="fPeople" inputmode="numeric" placeholder="예: 25명"></label>
+        <label>희망 일시<input id="fDate" placeholder="예: 11월 둘째 주 수요일 오후 3시"></label>
+        <label>진행 방식
+          <select id="fMode">
+            <option>대면 (노트북 지참 실습 가능)</option>
+            <option>대면 (강의 위주)</option>
+            <option>원격 (실시간 화상)</option>
+          </select>
+        </label>
+        <label>요청 사항<textarea id="fMemo" rows="3" placeholder="학교 상황이나 궁금한 점을 적어 주세요"></textarea></label>
+      </div>
+      <div class="row-btns">
+        <button class="btn btn-sub" id="clearCart">비우기</button>
+        <button class="btn btn-main" id="makeReq">요청서 만들기</button>
+      </div>
+      <div id="reqBox" hidden>
+        <textarea class="out" id="reqText" readonly></textarea>
+        <div class="row-btns one">
+          <button class="btn btn-soft" id="copyReq">요청서 복사하기</button>
+        </div>
+        <p class="note">문의 전화 0507-0465-3015 (나이스 현장지원단)</p>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+// 강의 모듈과 제작 사례 데이터
+const TOPICS = [
+  {id:"eva", lv:"중", name:"디지털 도구 기반 과정중심 평가 기록과 학생부 연계", color:"--topic-b", ico:"📝",
+   sub:"수업 중 쌓은 관찰 기록이 학기말 학생부 문장으로 이어지는 템플릿을 실습합니다."},
+  {id:"obs", lv:"중", name:"제미나이 노트북(구 NotebookLM)을 활용한 학생 개인별 관찰 기록 및 누가 기록 시스템", color:"--topic-j", ico:"🎙️",
+   sub:"학생별 노트북에 관찰 내용을 그때그때 음성으로 쌓고, 이를 근거로 세특과 행동특성 및 종합의견을 작성하는 시스템을 만듭니다."},
+  {id:"qz", lv:"중", name:"AI로 Kahoot, Blooket, Quizlet 퀴즈 빠르게 만들어 학생참여수업 하기", color:"--topic-i", ico:"🎮",
+   sub:"AI로 퀴즈 문항을 몇 분 만에 만들고, 학생들이 휴대폰으로 참여하는 게임형 수업을 운영합니다."},
+  {id:"ntn", lv:"상", name:"노션으로 학교 업무 관리하기", color:"--topic-d", ico:"🗂️",
+   sub:"흩어진 업무, 일정, 회의록을 노션 한 곳에 모아 부서가 함께 봅니다."},
+  {id:"sht", lv:"중", name:"구글 시트로 학교 업무정보센터 운영하기", color:"--topic-e", ico:"📊",
+   sub:"공지, 업무 분장, 일정, 서식을 시트 하나에 모아 교직원 누구나 찾아보게 만듭니다."},
+  {id:"gn", lv:"하", name:"제미나이 노트북(구 NotebookLM)으로 하는 학교 업무", color:"--topic-g", ico:"📚",
+   sub:"규정, 지침, 매뉴얼, 학습자료를 소스로 올려 근거에 기대어 답하는 도우미를 만듭니다."},
+  {id:"orr", lv:"상", name:"오픈라우터 API로 나만의 AI 웹앱 만들어 쓰기", color:"--topic-h", ico:"🧩",
+   sub:"API 키 하나로 여러 AI 모델을 연결해 우리 학교 업무에 딱 맞는 웹앱을 만듭니다."}
+];
+const DATA = [
+  {id:"a1", t:"eva", title:"관찰 기록 누적 시트 템플릿", d:"날짜, 성취기준, 활동, 관찰 키워드를 수업 중 휴대폰으로 30초 안에 입력하는 시트를 함께 만듭니다.", cat:["교수학습"], type:"실습", min:40},
+  {id:"a3", t:"eva", title:"누적 기록으로 학생부 문장 초안 만들기", d:"쌓인 관찰 키워드로 세특·종합의견 초안을 만들고 교사가 사실을 확인해 다듬습니다.", cat:["교수학습"], type:"실습", min:50},
+  {id:"a4", t:"eva", title:"기재요령 자동 점검", d:"글자 수(바이트), 기재 금지 표현, 학생 간 문장 유사도를 시트 수식으로 점검합니다.", cat:["교수학습","교무업무"], type:"시연", min:30},
+
+  {id:"r1", t:"obs", title:"학생별 노트북으로 누가 기록 공간 설계하기", d:"학생 한 명당 노트북 하나를 만들고, 이름 대신 번호로 된 이름 규칙과 날짜, 과목, 장면을 담는 기록 양식을 정합니다.", cat:["교수학습","교무업무"], type:"실습", min:30},
+  {id:"r2", t:"obs", title:"타이플리스(Typeless)로 말하는 즉시 받아쓰기", d:"AI 음성 키보드 앱 타이플리스로 관찰 내용을 말하면 군더더기 없는 문장으로 정리되어, 학생별 노트북에 바로 쌓입니다.", cat:["교수학습","교무업무"], type:"시연", min:30},
+  {id:"r3", t:"obs", title:"수업 직후 1분 누가 기록 루틴 만들기", d:"수업 직후, 쉬는 시간, 상담 뒤처럼 기록할 순간을 정하고, 짧게 말하는 요령과 자주 쓰는 교육 용어 등록법을 익힙니다.", cat:["교수학습"], type:"실습", min:20},
+  {id:"r4", t:"obs", title:"누가 기록으로 과목별 세특 초안 만들기", d:"쌓인 관찰 기록을 바탕으로 과목별 세부능력 및 특기사항 초안을 만들고, 문장마다 근거 기록을 확인하며 다듬습니다.", cat:["교수학습"], type:"실습", min:40},
+  {id:"r5", t:"obs", title:"누가 기록으로 행동특성 및 종합의견 작성하기", d:"한 학기 동안 쌓인 생활과 태도 기록을 모아 학생의 변화와 성장이 드러나는 종합의견 초안을 만듭니다.", cat:["교수학습","교무업무"], type:"실습", min:30},
+
+  {id:"q1", t:"qz", title:"AI로 교과서 지문에서 퀴즈 문항 뽑기", d:"교과서 본문이나 학습자료를 AI에 주고 어휘, 빈칸, 내용 이해 문항을 학생 수준에 맞게 만듭니다.", cat:["교수학습"], type:"실습", min:30},
+  {id:"q2", t:"qz", title:"Kahoot, Blooket, Quizlet에 바로 올리는 파일 만들기", d:"플랫폼마다 다른 가져오기 형식에 맞춰 AI가 문항을 채우게 하고, 한 번에 불러와 퀴즈를 완성합니다.", cat:["교수학습"], type:"실습", min:40},
+  {id:"q4", t:"qz", title:"휴대폰으로 참여하는 게임형 수업 운영하기", d:"수업 도입, 복습, 형성평가에 퀴즈를 넣는 흐름과 기기 준비, 참여가 적은 학생을 챙기는 방법을 나눕니다.", cat:["교수학습"], type:"시연", min:30},
+
+
+  {id:"nb1", t:"ntn", title:"노션 가입하고 기본 구조 익히기", d:"교육용 계정 만들기부터 페이지와 블록으로 내용을 쌓는 방식, 팀스페이스 구조까지 처음부터 함께 해 봅니다.", cat:["교무업무"], type:"실습", min:30},
+  {id:"nb2", t:"ntn", title:"노션 데이터베이스 기초", d:"표를 만들고 속성을 정한 뒤 보드, 캘린더, 갤러리로 보기를 바꾸고 필터와 정렬로 필요한 것만 골라 봅니다.", cat:["교무업무"], type:"실습", min:40},
+  {id:"n1", t:"ntn", title:"업무 데이터베이스로 연간 업무 한눈에 보기", d:"업무, 담당자, 기한, 진행 상태를 데이터베이스 하나로 만들고 캘린더와 보드로 바꿔 봅니다.", cat:["교무업무"], type:"실습", min:40},
+  {id:"n2", t:"ntn", title:"부서 협업 공간과 인수인계 페이지", d:"회의록 템플릿, 부서 공지, 다음 담당자에게 넘길 인수인계 페이지를 함께 만듭니다.", cat:["교무업무"], type:"실습", min:30},
+
+  {id:"s1", t:"sht", title:"업무정보센터 뼈대 만들기", d:"공지, 업무 분장, 주요 일정, 서식 모음 탭을 만들고 교직원과 보기 권한으로 공유합니다.", cat:["교무업무"], type:"실습", min:40},
+  {id:"s5", t:"sht", title:"학사일정, 수업시수 확보 계획, 창체 운영을 한 시트에서 관리하기", d:"학사일정표와 수업시수 확보 계획, 창의적 체험활동 운영 계획을 한 시트에 연결해 일정이 바뀌면 시수도 함께 확인합니다.", cat:["교무업무"], type:"실습", min:40},
+  {id:"s6", t:"sht", title:"주간 업무 협의록 함께 작성하고 관리하기", d:"여러 부서가 한 시트에 주간 업무를 함께 적고, 지난 협의 내용을 날짜별로 쉽게 찾아봅니다.", cat:["교무업무"], type:"실습", min:30},
+  {id:"s7", t:"sht", title:"학교 예산 대시보드로 예산 빠르게 찾아보기", d:"사업별 예산과 집행 현황을 대시보드로 만들어 필요한 예산을 빠르고 쉽게 찾아봅니다.", cat:["교무업무"], type:"시연", min:30},
+  {id:"s8", t:"sht", title:"교육과정 편제를 구글 시트로 관리하기", d:"학년·학기별 과목 편제와 시수를 시트로 관리하고, 편제가 바뀌어도 합계가 자동으로 맞춰지게 만듭니다.", cat:["교무업무"], type:"실습", min:40},
+  {id:"s9", t:"sht", title:"평가 관련 업무를 구글 시트로 관리하기", d:"평가계획, 정기시험 일정, 성적 처리 일정과 점검 항목을 한 시트에서 챙깁니다.", cat:["교수학습","교무업무"], type:"실습", min:30},
+  {id:"s10", t:"sht", title:"학교생활기록부 관련 업무를 구글 시트로 관리하기", d:"영역별 기재 일정과 입력 현황, 점검 결과를 시트에 모아 마감 전에 빠진 곳을 찾습니다.", cat:["교수학습","교무업무"], type:"실습", min:30},
+  {id:"s4", t:"sht", title:"공유 권한과 개인정보 관리", d:"누가 보고 누가 고칠지 정하는 법, 학생 정보를 업무정보센터에 두지 않는 원칙을 정리합니다.", cat:["교무업무"], type:"강의", min:20},
+
+
+  {id:"g1", t:"gn", title:"규정·지침·매뉴얼 챗봇 만들기", d:"학교 규정과 교육청 지침, 나이스 매뉴얼을 올려 근거 쪽수와 함께 답하는 업무 챗봇을 만듭니다.", cat:["교무업무"], type:"실습", min:40},
+  {id:"g2", t:"gn", title:"학습자료로 수업자료 만들기", d:"교과서와 참고자료를 소스로 학습 안내서, 퀴즈, 오디오 요약 같은 수업자료를 만듭니다.", cat:["교수학습"], type:"실습", min:40},
+  {id:"g3", t:"gn", title:"수행평가 채점 도우미", d:"채점기준표를 소스로 넣고 가명 처리한 답안을 1차로 분류해 봅니다. 최종 판단은 교사가 합니다.", cat:["교수학습"], type:"시연", min:30},
+  {id:"g4", t:"gn", title:"문서 검토 도우미", d:"계획서, 가정통신문, 공문 초안을 관련 지침과 대조해 빠진 항목과 어긋난 표현을 찾습니다.", cat:["교무업무"], type:"시연", min:30},
+  {id:"g5", t:"gn", title:"학교 규정 개정 도우미", d:"현행 규정과 바뀐 상위 지침을 비교해 개정이 필요한 조항을 찾고 신구조문 대비표 초안을 만듭니다.", cat:["교무업무"], type:"실습", min:40},
+
+  {id:"o1", t:"orr", title:"오픈라우터 이해하기", d:"API 키 하나로 여러 회사의 AI 모델을 골라 쓰는 방식과 사용한 만큼 내는 비용 구조를 알아봅니다.", cat:["교수학습","교무업무"], type:"강의", min:20},
+  {id:"o2", t:"orr", title:"말로 요청해 AI 웹앱 만들기", d:"가정통신문 다듬기, 학생부 문장 점검기처럼 우리 학교에 필요한 웹앱을 AI에게 요청해 만듭니다.", cat:["교수학습","교무업무"], type:"시연", min:40},
+  {id:"o3", t:"orr", title:"API 키 안전하게 다루기", d:"키가 페이지에 그대로 드러나면 안 되는 이유, 사용 한도 설정으로 비용 사고를 막는 법을 다룹니다.", cat:["교수학습","교무업무"], type:"강의", min:20},
+  {id:"o4", t:"orr", title:"만든 웹앱을 동료와 나눠 쓰기", d:"완성한 웹앱을 인터넷에 올려 링크로 공유하고, 고칠 때마다 업데이트하는 과정을 보여 드립니다.", cat:["교수학습","교무업무"], type:"시연", min:30}
+];
+// 장바구니 상태 (방문자 브라우저에만 저장)
+const KEY = "lecture-cart-v1";
+let cart = new Set();
+try { const s = localStorage.getItem(KEY); if (s) cart = new Set(JSON.parse(s).filter(id => DATA.some(x => x.id === id))); } catch (e) {}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify([...cart])); } catch (e) {} }
+
+let level = "all";
+const $ = s => document.querySelector(s);
+const colorOf = t => `var(${TOPICS.find(x => x.id === t).color})`;
+const fmt = m => m < 60 ? `${m}분` : `${Math.floor(m/60)}시간${m%60 ? " " + (m%60) + "분" : ""}`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderCatalog(){
+  $("#topics").innerHTML = TOPICS.map(tp => {
+    const items = DATA.filter(x => x.t === tp.id && (level === "all" || x.cat.includes(level)));
+    if (!items.length) return "";
+    const rows = items.map(x => `
+      <label class="item${cart.has(x.id) ? " on" : ""}" data-id="${x.id}">
+        <input type="checkbox" ${cart.has(x.id) ? "checked" : ""} data-id="${x.id}">
+        <div>
+          <h4>${esc(x.title)}</h4>
+          <p>${esc(x.d)}</p>
+          <div class="meta">
+            <span class="tag time">${x.min}분</span>
+            <span class="tag">${x.type}</span>
+            ${x.cat.map(c => `<span class="tag">${c}</span>`).join("")}
+          </div>
+        </div>
+        <span class="check" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg></span>
+      </label>`).join("");
+    return `<div class="topic">
+      <div class="topic-title"><span class="ico" style="background:color-mix(in srgb, ${colorOf(tp.id)} 14%, transparent)">${tp.ico}</span><h3>${tp.name} <span class="lvl" data-l="${tp.lv}">난이도 ${tp.lv}</span></h3></div>
+      <p class="topic-sub">${tp.sub}</p>${rows}</div>`;
+  }).join("");
+}
+
+function renderCart(){
+  const items = DATA.filter(x => cart.has(x.id));
+  const total = items.reduce((a, x) => a + x.min, 0);
+  $("#cnt").textContent = items.length;
+  $("#total").textContent = fmt(total);
+  $("#openCart").disabled = items.length === 0;
+  $("#openCart").textContent = items.length ? `${items.length}개 강의로 요청서 만들기` : "강의를 골라 주세요";
+
+  // 시간 막대: 최소 4시간 눈금, 1시간마다 구분선
+  const scale = Math.max(240, Math.ceil(total / 60) * 60);
+  let html = TOPICS.map(tp => {
+    const m = items.filter(x => x.t === tp.id).reduce((a, x) => a + x.min, 0);
+    return `<div class="seg" style="width:${m/scale*100}%;background:${colorOf(tp.id)}"></div>`;
+  }).join("");
+  for (let h = 60; h < scale; h += 60) html += `<span class="tick" style="left:${h/scale*100}%"></span>`;
+  $("#track").innerHTML = html;
+  $("#sideList").innerHTML = items.length ? items.map(x =>
+    `<li><span class="dot" style="background:${colorOf(x.t)}"></span><span class="t">${esc(x.title)}</span><span class="m">${x.min}분</span></li>`).join("")
+    : `<li class="none">왼쪽 목록에서 강의를 체크해 주세요.</li>`;
+
+  if (!items.length){
+    $("#cartList").innerHTML = `<p class="empty"><b>🛒</b>아직 담은 강의가 없어요</p>`;
+    $("#cartRest").hidden = true;
+    return;
+  }
+  $("#cartRest").hidden = false;
+  $("#cartList").innerHTML = items.map(x => `
+    <div class="c-row"><span class="dot" style="background:${colorOf(x.t)}"></span>
+      <span class="t">${esc(x.title)}</span><span class="m">${x.min}분</span>
+      <button class="x" data-remove="${x.id}" aria-label="${esc(x.title)} 빼기">✕</button></div>`).join("");
+  const breaks = Math.floor((total - 1) / 90);
+  $("#summary").innerHTML = `강의 시간 합계<span class="big">${fmt(total)}</span>` +
+    (breaks > 0 ? `쉬는 시간 ${breaks}회(각 10분)를 넣으면 약 ${fmt(total + breaks*10)}이 걸려요.` : "") +
+    (total > 240 ? `<br>4시간이 넘어 두 번에 나눠 진행하는 것을 권해요.` : "");
+}
+
+function toggle(id, on){
+  on ? cart.add(id) : cart.delete(id);
+  save(); renderCatalog(); renderCart(); $("#reqBox").hidden = true;
+}
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+$("#topics").addEventListener("change", e => {
+  if (e.target.matches("input[data-id]")) toggle(e.target.dataset.id, e.target.checked);
+});
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+  level = b.dataset.level;
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+  renderCatalog();
+}));
+
+function openDrawer(open){
+  $("#drawer").classList.toggle("open", open);
+  $("#drawerBg").classList.toggle("open", open);
+  $("#drawer").setAttribute("aria-hidden", !open);
+  if (open) $("#closeCart").focus();
+}
+$("#openCart").addEventListener("click", () => openDrawer(true));
+$("#closeCart").addEventListener("click", () => openDrawer(false));
+$("#drawerBg").addEventListener("click", () => openDrawer(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape") openDrawer(false); });
+$("#cartList").addEventListener("click", e => {
+  const id = e.target.dataset.remove; if (id) toggle(id, false);
+});
+$("#clearCart").addEventListener("click", () => { cart.clear(); save(); renderCatalog(); renderCart(); $("#reqBox").hidden = true; });
+
+$("#makeReq").addEventListener("click", () => {
+  const items = DATA.filter(x => cart.has(x.id));
+  const total = items.reduce((a, x) => a + x.min, 0);
+  const v = id => $(id).value.trim() || "(미정)";
+  const lines = [
+    "[연수 강의 요청서]", "",
+    `학교명: ${v("#fSchool")}`,
+    `연수 대상: ${$("#fTarget").value}`,
+    `참석 인원: ${v("#fPeople")}`,
+    `희망 일시: ${v("#fDate")}`,
+    `진행 방식: ${$("#fMode").value}`, "",
+    `희망 강의 (총 ${items.length}개, ${fmt(total)})`
+  ];
+  TOPICS.forEach(tp => {
+    const g = items.filter(x => x.t === tp.id);
+    if (!g.length) return;
+    lines.push("", `■ ${tp.name}`);
+    g.forEach(x => lines.push(`  - ${x.title} (${x.type}, ${x.min}분)`));
+  });
+  lines.push("", `요청 사항: ${v("#fMemo")}`);
+  $("#reqText").value = lines.join("\n");
+  $("#reqBox").hidden = false;
+  $("#reqText").scrollIntoView({block:"nearest"});
+});
+$("#copyReq").addEventListener("click", async () => {
+  const ta = $("#reqText");
+  try { await navigator.clipboard.writeText(ta.value); toast("요청서를 복사했어요"); }
+  catch (e) {
+    ta.select();
+    try { document.execCommand("copy") ? toast("요청서를 복사했어요") : toast("글자를 길게 눌러 직접 복사해 주세요"); }
+    catch (e2) { toast("글자를 길게 눌러 직접 복사해 주세요"); }
+  }
+});
+
+// 화면 모드 전환
+const themeBtn = $("#themeBtn");
+function paintThemeBtn(){
+  const dark = document.documentElement.dataset.theme === "dark";
+  themeBtn.firstElementChild.textContent = dark ? "☀️" : "🌙";
+  themeBtn.title = dark ? "라이트 모드로 보기" : "다크 모드로 보기";
+}
+themeBtn.addEventListener("click", () => {
+  const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("theme", next); } catch (e) {}
+  paintThemeBtn();
+});
+paintThemeBtn();
+
+renderCatalog();
+renderCart();
+</script>
+</body>
+</html>
