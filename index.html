@@ -364,17 +364,17 @@ try {
 <script>
 // 강의 모듈과 제작 사례 데이터
 const TOPICS = [
-  {id:"qz", lv:"중", name:"AI로 Kahoot, Blooket, Quizlet 퀴즈 빠르게 만들어 학생참여수업 하기", color:"--topic-i", ico:"🎮",
+  {id:"qz", lv:"중", name:"AI로 Kahoot, Blooket, Quizlet 퀴즈 빠르게 만들어 학생참여수업 하기", badges:["중고등","초등"], color:"--topic-i", ico:"🎮",
    sub:"AI로 퀴즈 문항을 몇 분 만에 만들고, 학생들이 휴대폰으로 참여하는 게임형 수업을 운영합니다."},
-  {id:"ach", lv:"중", name:"성취수준 체크로 만드는 생활기록부 초안", badge:"초등", color:"--topic-b", ico:"📋",
+  {id:"ach", lv:"중", name:"성취수준 체크로 만드는 생활기록부 초안", badges:["초등"], color:"--topic-b", ico:"📋",
    sub:"평소 해 두는 성취기준별 수준 체크를 그대로 기초 자료로 삼아, 내 문체가 담긴 생활기록부 초안을 학생별로 한꺼번에 만듭니다."},
-  {id:"ntn", lv:"상", name:"노션으로 학교 업무 관리하기", color:"--topic-d", ico:"🗂️",
+  {id:"ntn", lv:"상", name:"노션으로 학교 업무 관리하기", badges:["중고등","초등"], color:"--topic-d", ico:"🗂️",
    sub:"흩어진 업무, 일정, 회의록을 노션 한 곳에 모아 부서가 함께 봅니다."},
-  {id:"sht", lv:"중", name:"구글 시트로 학교 업무정보센터 운영하기", color:"--topic-e", ico:"📊",
+  {id:"sht", lv:"중", name:"구글 시트로 학교 업무정보센터 운영하기", badges:["중고등","초등"], color:"--topic-e", ico:"📊",
    sub:"공지, 업무 분장, 일정, 서식을 시트 하나에 모아 교직원 누구나 찾아보게 만듭니다."},
-  {id:"gn", lv:"하", name:"제미나이 노트북(구 NotebookLM)으로 하는 학교 업무", color:"--topic-g", ico:"📚",
+  {id:"gn", lv:"하", name:"제미나이 노트북(구 NotebookLM)으로 하는 학교 업무", badges:["중고등","초등"], color:"--topic-g", ico:"📚",
    sub:"규정, 지침, 매뉴얼, 학습자료를 소스로 올려 근거에 기대어 답하는 도우미를 만듭니다."},
-  {id:"orr", lv:"상", name:"바이브코딩으로 오픈라우터 API 키를 넣은 나만의 AI웹앱 만들어 쓰기", color:"--topic-h", ico:"🧩",
+  {id:"orr", lv:"상", name:"바이브코딩으로 오픈라우터 API 키를 넣은 나만의 AI웹앱 만들어 쓰기", badges:["중고등","초등"], color:"--topic-h", ico:"🧩",
    sub:"API 키 하나로 여러 AI 모델을 연결해 우리 학교 업무에 딱 맞는 웹앱을 만듭니다."}
 ];
 const DATA = [
@@ -449,7 +449,7 @@ function renderCatalog(){
         <span class="check" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg></span>
       </label>`).join("");
     return `<div class="topic">
-      <div class="topic-title"><span class="ico" style="background:color-mix(in srgb, ${colorOf(tp.id)} 14%, transparent)">${tp.ico}</span><h3>${tp.name} <span class="lvl" data-l="${tp.lv}">난이도 ${tp.lv}</span>${tp.badge ? ` <span class="grade-badge">${tp.badge}</span>` : ""}</h3></div>
+      <div class="topic-title"><span class="ico" style="background:color-mix(in srgb, ${colorOf(tp.id)} 14%, transparent)">${tp.ico}</span><h3>${tp.name} <span class="lvl" data-l="${tp.lv}">난이도 ${tp.lv}</span>${(tp.badges || []).map(b => ` <span class="grade-badge">${b}</span>`).join("")}</h3></div>
       <p class="topic-sub">${tp.sub}</p>${rows}</div>`;
   }).join("");
 }
@@ -539,7 +539,7 @@ $("#makeReq").addEventListener("click", () => {
   TOPICS.forEach(tp => {
     const g = items.filter(x => x.t === tp.id);
     if (!g.length) return;
-    lines.push("", `■ ${tp.name}${tp.badge ? ` (${tp.badge})` : ""}`);
+    lines.push("", `■ ${tp.name}${tp.badges && tp.badges.length === 1 ? ` (${tp.badges[0]})` : ""}`);
     g.forEach(x => lines.push(`  - ${x.title} (${x.type}, ${x.min}분)`));
   });
   lines.push("", `요청 사항: ${v("#fMemo")}`);
