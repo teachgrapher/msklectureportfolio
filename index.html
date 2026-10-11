@@ -103,6 +103,7 @@ footer .card p.tel{font-size:1.6rem; font-weight:700; color:var(--blue)!importan
 .lvl{display:inline-block; font-size:.75rem; font-weight:700; padding:2px 8px; border-radius:6px; vertical-align:2px; white-space:nowrap}
 .lvl[data-l="하"]{background:color-mix(in srgb, var(--lv-low) 14%, transparent); color:var(--lv-low)}
 .lvl[data-l="중"]{background:color-mix(in srgb, var(--lv-mid) 16%, transparent); color:var(--lv-mid)}
+.grade-badge{display:inline-block; font-size:.68rem; font-weight:700; padding:1px 6px; border-radius:5px; vertical-align:2px; white-space:nowrap; background:var(--fill); color:var(--sub)}
 .lvl[data-l="상"]{background:color-mix(in srgb, var(--lv-high) 14%, transparent); color:var(--lv-high)}
 .topic-sub{color:var(--sub); font-size:.93rem; margin:8px 0 8px}
 .item{display:grid; grid-template-columns:1fr auto; gap:14px; align-items:center; padding:16px 12px; margin:0 -12px; border-radius:16px; cursor:pointer; transition:background .15s}
@@ -365,7 +366,7 @@ try {
 const TOPICS = [
   {id:"qz", lv:"중", name:"AI로 Kahoot, Blooket, Quizlet 퀴즈 빠르게 만들어 학생참여수업 하기", color:"--topic-i", ico:"🎮",
    sub:"AI로 퀴즈 문항을 몇 분 만에 만들고, 학생들이 휴대폰으로 참여하는 게임형 수업을 운영합니다."},
-  {id:"ach", lv:"중", name:"[초등학교용] 성취수준 체크로 만드는 생활기록부 초안", color:"--topic-b", ico:"📋",
+  {id:"ach", lv:"중", name:"성취수준 체크로 만드는 생활기록부 초안", badge:"초등", color:"--topic-b", ico:"📋",
    sub:"평소 해 두는 성취기준별 수준 체크를 그대로 기초 자료로 삼아, 내 문체가 담긴 생활기록부 초안을 학생별로 한꺼번에 만듭니다."},
   {id:"ntn", lv:"상", name:"노션으로 학교 업무 관리하기", color:"--topic-d", ico:"🗂️",
    sub:"흩어진 업무, 일정, 회의록을 노션 한 곳에 모아 부서가 함께 봅니다."},
@@ -448,7 +449,7 @@ function renderCatalog(){
         <span class="check" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg></span>
       </label>`).join("");
     return `<div class="topic">
-      <div class="topic-title"><span class="ico" style="background:color-mix(in srgb, ${colorOf(tp.id)} 14%, transparent)">${tp.ico}</span><h3>${tp.name} <span class="lvl" data-l="${tp.lv}">난이도 ${tp.lv}</span></h3></div>
+      <div class="topic-title"><span class="ico" style="background:color-mix(in srgb, ${colorOf(tp.id)} 14%, transparent)">${tp.ico}</span><h3>${tp.name} <span class="lvl" data-l="${tp.lv}">난이도 ${tp.lv}</span>${tp.badge ? ` <span class="grade-badge">${tp.badge}</span>` : ""}</h3></div>
       <p class="topic-sub">${tp.sub}</p>${rows}</div>`;
   }).join("");
 }
@@ -538,7 +539,7 @@ $("#makeReq").addEventListener("click", () => {
   TOPICS.forEach(tp => {
     const g = items.filter(x => x.t === tp.id);
     if (!g.length) return;
-    lines.push("", `■ ${tp.name}`);
+    lines.push("", `■ ${tp.name}${tp.badge ? ` (${tp.badge})` : ""}`);
     g.forEach(x => lines.push(`  - ${x.title} (${x.type}, ${x.min}분)`));
   });
   lines.push("", `요청 사항: ${v("#fMemo")}`);
